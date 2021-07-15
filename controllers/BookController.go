@@ -1,9 +1,11 @@
 package controllers
 
 import (
+	"fmt"
 	"go-gin-api-rest/models"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,14 +18,33 @@ func CreateBook(c *gin.Context) {
 		return
 	}
 
+	// YYYYMMDD
+	if input.Birthdate != nil {
+		const layout = "2006-01-02"
+
+		dateValue, err := time.Parse(layout, *input.Birthdate)
+		if err != nil {
+			c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+			return
+		}
+
+		fmt.Println(dateValue)
+		formatDate := dateValue.Format(layout)
+		fmt.Println(formatDate)
+	}
+
 	c.JSON(http.StatusOK, gin.H{"data": input})
 }
 
 func FindBook(c *gin.Context) {
+	birthdate := "2021-14-06"
 	book := models.CreateBookModel{
-		ID:     45,
-		Title:  "Programming",
-		Author: "Miguel",
+		ID:        45,
+		Title:     "Programming",
+		Author:    "Miguel",
+		Sex:       "male",
+		Status:    5,
+		Birthdate: &birthdate,
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": book})
@@ -37,7 +58,9 @@ func GetBookById(c *gin.Context) {
 		book := models.CreateBookModel{
 			ID:     uint(id),
 			Title:  "Programming",
-			Author: "Miguel",
+			Author: "Maria",
+			Sex:    "female",
+			Status: 4,
 		}
 
 		c.JSON(http.StatusOK, gin.H{"data": book})
