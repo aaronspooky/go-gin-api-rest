@@ -18,7 +18,7 @@ func CreateBook(c *gin.Context) {
 		return
 	}
 
-	// YYYYMMDD
+	// YYYY-MM-DD
 	if input.Birthdate != nil {
 		const layout = "2006-01-02"
 
@@ -38,6 +38,7 @@ func CreateBook(c *gin.Context) {
 
 func FindBook(c *gin.Context) {
 	birthdate := "2021-14-06"
+	isActive := true
 	book := models.CreateBookModel{
 		ID:        45,
 		Title:     "Programming",
@@ -45,6 +46,7 @@ func FindBook(c *gin.Context) {
 		Sex:       "male",
 		Status:    5,
 		Birthdate: &birthdate,
+		IsActive:  &isActive,
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": book})
@@ -55,12 +57,14 @@ func GetBookById(c *gin.Context) {
 
 	id, err := strconv.Atoi(idPath)
 	if err == nil {
+		isActive := true
 		book := models.CreateBookModel{
-			ID:     uint(id),
-			Title:  "Programming",
-			Author: "Maria",
-			Sex:    "female",
-			Status: 4,
+			ID:       uint(id),
+			Title:    "Programming",
+			Author:   "Maria",
+			Sex:      "female",
+			Status:   4,
+			IsActive: &isActive,
 		}
 
 		c.JSON(http.StatusOK, gin.H{"data": book})

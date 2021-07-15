@@ -7,4 +7,5 @@ type CreateBookModel struct {
 	Sex       string  `json:"sex" binding:"required,oneof=male female"`
 	Status    uint    `json:"status" binding:"required,numeric,max=6"`
 	Birthdate *string `json:"birthdate"`
+	IsActive  *bool   `json:"isActive" binding:"required"`
 }
