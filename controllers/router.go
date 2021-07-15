@@ -18,6 +18,7 @@ func HandleRequests() *gin.Engine {
 	r.POST("/createbook", CreateBook)
 	r.GET("/getBook", FindBook)
 	r.GET("/getBook/:id", GetBookById)
+	r.GET("/getBookAuthor/:id", GetBookAndAuthor)
 
 	return r
 }

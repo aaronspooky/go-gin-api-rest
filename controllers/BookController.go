@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"go-gin-api-rest/models"
+	"go-gin-api-rest/responses"
 	"net/http"
 	"strconv"
 	"time"
@@ -65,6 +66,27 @@ func GetBookById(c *gin.Context) {
 			Sex:      "female",
 			Status:   4,
 			IsActive: &isActive,
+		}
+
+		c.JSON(http.StatusOK, gin.H{"data": book})
+	} else {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Id is not a number"})
+	}
+}
+
+//
+func GetBookAndAuthor(c *gin.Context) {
+	idPath := c.Param("id")
+
+	id, err := strconv.Atoi(idPath)
+	if err == nil {
+		book := responses.BookResponse{
+			ID:   uint(id),
+			Name: "Fire and blood",
+			Author: responses.AuthorResponse{
+				ID:   8,
+				Name: "John Doe",
+			},
 		}
 
 		c.JSON(http.StatusOK, gin.H{"data": book})
