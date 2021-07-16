@@ -94,3 +94,14 @@ func GetBookAndAuthor(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Id is not a number"})
 	}
 }
+
+//
+func GetBookWithQuery(c *gin.Context) {
+	idPath := c.Param("id")
+	author := c.Query("author")
+
+	c.JSON(http.StatusOK, gin.H{
+		"path":   idPath,
+		"author": author,
+	})
+}

@@ -19,6 +19,7 @@ func HandleRequests() *gin.Engine {
 	r.GET("/getBook", FindBook)
 	r.GET("/getBook/:id", GetBookById)
 	r.GET("/getBookAuthor/:id", GetBookAndAuthor)
+	r.GET("/getBookQuery/:id", GetBookWithQuery)
 
 	return r
 }
